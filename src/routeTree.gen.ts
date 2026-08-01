@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BookingMethodRouteImport } from './routes/booking-method'
+import { Route as ConciergeRouteImport } from './routes/concierge'
+import { Route as ConfirmationRouteImport } from './routes/confirmation'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as OffersRouteImport } from './routes/offers'
+import { Route as QueueRouteImport } from './routes/queue'
+import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SlotsRouteImport } from './routes/slots'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingMethodRoute = BookingMethodRouteImport.update({
+  id: '/booking-method',
+  path: '/booking-method',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConciergeRoute = ConciergeRouteImport.update({
+  id: '/concierge',
+  path: '/concierge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmationRoute = ConfirmationRouteImport.update({
+  id: '/confirmation',
+  path: '/confirmation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OffersRoute = OffersRouteImport.update({
+  id: '/offers',
+  path: '/offers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QueueRoute = QueueRouteImport.update({
+  id: '/queue',
+  path: '/queue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SlotsRoute = SlotsRouteImport.update({
+  id: '/slots',
+  path: '/slots',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/booking-method': typeof BookingMethodRoute
+  '/concierge': typeof ConciergeRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/notifications': typeof NotificationsRoute
+  '/offers': typeof OffersRoute
+  '/queue': typeof QueueRoute
+  '/services': typeof ServicesRoute
+  '/slots': typeof SlotsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/booking-method': typeof BookingMethodRoute
+  '/concierge': typeof ConciergeRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/notifications': typeof NotificationsRoute
+  '/offers': typeof OffersRoute
+  '/queue': typeof QueueRoute
+  '/services': typeof ServicesRoute
+  '/slots': typeof SlotsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/booking-method': typeof BookingMethodRoute
+  '/concierge': typeof ConciergeRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/notifications': typeof NotificationsRoute
+  '/offers': typeof OffersRoute
+  '/queue': typeof QueueRoute
+  '/services': typeof ServicesRoute
+  '/slots': typeof SlotsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/booking-method'
+    | '/concierge'
+    | '/confirmation'
+    | '/notifications'
+    | '/offers'
+    | '/queue'
+    | '/services'
+    | '/slots'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/booking-method'
+    | '/concierge'
+    | '/confirmation'
+    | '/notifications'
+    | '/offers'
+    | '/queue'
+    | '/services'
+    | '/slots'
+  id:
+    | '__root__'
+    | '/'
+    | '/booking-method'
+    | '/concierge'
+    | '/confirmation'
+    | '/notifications'
+    | '/offers'
+    | '/queue'
+    | '/services'
+    | '/slots'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookingMethodRoute: typeof BookingMethodRoute
+  ConciergeRoute: typeof ConciergeRoute
+  ConfirmationRoute: typeof ConfirmationRoute
+  NotificationsRoute: typeof NotificationsRoute
+  OffersRoute: typeof OffersRoute
+  QueueRoute: typeof QueueRoute
+  ServicesRoute: typeof ServicesRoute
+  SlotsRoute: typeof SlotsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,12 +156,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking-method': {
+      id: '/booking-method'
+      path: '/booking-method'
+      fullPath: '/booking-method'
+      preLoaderRoute: typeof BookingMethodRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/concierge': {
+      id: '/concierge'
+      path: '/concierge'
+      fullPath: '/concierge'
+      preLoaderRoute: typeof ConciergeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirmation': {
+      id: '/confirmation'
+      path: '/confirmation'
+      fullPath: '/confirmation'
+      preLoaderRoute: typeof ConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/offers': {
+      id: '/offers'
+      path: '/offers'
+      fullPath: '/offers'
+      preLoaderRoute: typeof OffersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/queue': {
+      id: '/queue'
+      path: '/queue'
+      fullPath: '/queue'
+      preLoaderRoute: typeof QueueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/slots': {
+      id: '/slots'
+      path: '/slots'
+      fullPath: '/slots'
+      preLoaderRoute: typeof SlotsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookingMethodRoute: BookingMethodRoute,
+  ConciergeRoute: ConciergeRoute,
+  ConfirmationRoute: ConfirmationRoute,
+  NotificationsRoute: NotificationsRoute,
+  OffersRoute: OffersRoute,
+  QueueRoute: QueueRoute,
+  ServicesRoute: ServicesRoute,
+  SlotsRoute: SlotsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
