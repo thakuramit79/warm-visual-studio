@@ -56,7 +56,7 @@ function Confirmation() {
         y: canvas!.height / 2,
         rotation: Math.random() * 360,
         size: Math.random() * 10 + 5,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        color: colors[Math.floor(Math.random() * colors.length)]!,
         speed: Math.random() * 10 + 5,
         angle: Math.random() * Math.PI * 2,
         gravity: 0.2,
