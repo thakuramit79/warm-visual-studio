@@ -95,17 +95,18 @@ function Index() {
           </div>
           <div className="hidden md:flex items-center gap-xl">
             <Link
-              className="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant font-medium hover:text-primary dark:hover:text-primary-fixed-dim transition-colors"
+              className="font-label-md text-label-md text-primary dark:text-primary-fixed border-b-2 border-primary font-bold pb-1 transition-colors"
               to="/"
             >
               Home
             </Link>
             <Link
-              className="font-label-md text-label-md text-primary dark:text-primary-fixed border-b-2 border-primary font-bold pb-1 transition-colors"
+              className="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant font-medium hover:text-primary dark:hover:text-primary-fixed-dim transition-colors"
               to="/services"
             >
               Services
             </Link>
+
             <Link
               className="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant font-medium hover:text-primary dark:hover:text-primary-fixed-dim transition-colors"
               to="/bookings"
