@@ -39,8 +39,10 @@ const bookingsByTab: Record<Tab, { key: string }[]> = {
 function Bookings() {
   const [activeTab, setActiveTab] = useState<Tab>("upcoming");
   const [search, setSearch] = useState("");
+  const { bookings: upcoming } = useUpcomingBookings();
 
   const cards = bookingsByTab[activeTab];
+
 
   return (
     <div className="bg-background text-on-surface font-body-md min-h-screen">
