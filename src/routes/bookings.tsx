@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
+import { useUpcomingBookings } from "@/lib/bookings-store";
+
+
 export const Route = createFileRoute("/bookings")({
   head: () => ({
     meta: [
@@ -36,8 +39,10 @@ const bookingsByTab: Record<Tab, { key: string }[]> = {
 function Bookings() {
   const [activeTab, setActiveTab] = useState<Tab>("upcoming");
   const [search, setSearch] = useState("");
+  const { bookings: upcoming } = useUpcomingBookings();
 
   const cards = bookingsByTab[activeTab];
+
 
   return (
     <div className="bg-background text-on-surface font-body-md min-h-screen">
@@ -139,74 +144,64 @@ function Bookings() {
           </div>
         </section>
         <section className="grid grid-cols-1 gap-md" id="bookings-container" style={{ transition: "opacity 0.3s" }}>
-          {activeTab === "upcoming" && (
-            <>
-              <div className="booking-card-hover bg-surface-container-lowest p-md md:p-lg rounded-xl border border-surface-variant shadow-[0px_4px_20px_rgba(11,44,71,0.05)] flex flex-col lg:flex-row lg:items-center gap-md lg:gap-xl">
-                <div className="flex items-center gap-md lg:w-1/3">
-                  <div className="w-16 h-16 rounded-xl bg-secondary-container flex items-center justify-center shrink-0">
-                    <span className="material-symbols-outlined text-on-secondary-container text-3xl">spa</span>
-                  </div>
-                  <div>
-                    <h3 className="font-headline-md text-headline-md text-primary truncate">Serenity Wellness Spa</h3>
-                    <p className="text-on-surface-variant font-label-md text-label-md">Full Body Aromatherapy</p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-md lg:flex-1 lg:justify-center">
-                  <div className="flex items-center gap-sm bg-surface-container px-md py-2 rounded-lg">
-                    <span className="material-symbols-outlined text-secondary">calendar_today</span>
+          {activeTab === "upcoming" &&
+            (upcoming.length === 0 ? (
+              <div className="text-center py-xl text-on-surface-variant font-body-md">No upcoming bookings.</div>
+            ) : (
+              upcoming.map((b) => (
+                <div
+                  key={b.id}
+                  className="booking-card-hover bg-surface-container-lowest p-md md:p-lg rounded-xl border border-surface-variant shadow-[0px_4px_20px_rgba(11,44,71,0.05)] flex flex-col lg:flex-row lg:items-center gap-md lg:gap-xl"
+                >
+                  <div className="flex items-center gap-md lg:w-1/3">
+                    <div className={`w-16 h-16 rounded-xl ${b.iconBg} flex items-center justify-center shrink-0`}>
+                      <span className={`material-symbols-outlined ${b.iconFg} text-3xl`}>{b.icon}</span>
+                    </div>
                     <div>
-                      <p className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Date &amp; Time</p>
-                      <p className="font-body-md text-body-md font-semibold">Oct 24, 2024 • 2:00 PM</p>
+                      <h3 className="font-headline-md text-headline-md text-primary truncate">{b.business}</h3>
+                      <p className="text-on-surface-variant font-label-md text-label-md">{b.service}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-sm bg-secondary-container/30 px-md py-2 rounded-lg border border-secondary/20">
-                    <span className="material-symbols-outlined text-secondary animate-pulse">timer</span>
-                    <div>
-                      <p className="font-label-sm text-label-sm text-on-secondary-fixed-variant uppercase tracking-wider">Status</p>
-                      <p className="font-body-md text-body-md font-bold text-on-secondary-container">Starting in 2 hours</p>
+                  <div className="flex flex-wrap gap-md lg:flex-1 lg:justify-center">
+                    <div className="flex items-center gap-sm bg-surface-container px-md py-2 rounded-lg">
+                      <span className={`material-symbols-outlined ${b.highlight ? "text-secondary" : "text-outline"}`}>calendar_today</span>
+                      <div>
+                        <p className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Date &amp; Time</p>
+                        <p className="font-body-md text-body-md font-semibold">{b.date} • {b.time}</p>
+                      </div>
+                    </div>
+                    <div
+                      className={`flex items-center gap-sm px-md py-2 rounded-lg ${
+                        b.highlight ? "bg-secondary-container/30 border border-secondary/20" : "bg-surface-container"
+                      }`}
+                    >
+                      <span className={`material-symbols-outlined ${b.highlight ? "text-secondary animate-pulse" : "text-outline"}`}>
+                        {b.highlight ? "timer" : "info"}
+                      </span>
+                      <div>
+                        <p className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</p>
+                        <p className={`font-body-md text-body-md font-semibold ${b.highlight ? "font-bold text-on-secondary-container" : "text-on-surface-variant"}`}>
+                          {b.status}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-wrap gap-sm lg:w-1/4 lg:justify-end">
-                  <button className="flex-1 lg:flex-none px-md py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors">Reschedule</button>
-                  <button className="flex-1 lg:flex-none px-md py-2 border border-error text-error rounded-lg font-label-md text-label-md hover:bg-error-container/20 transition-colors">Cancel</button>
-                </div>
-              </div>
-              <div className="booking-card-hover bg-surface-container-lowest p-md md:p-lg rounded-xl border border-surface-variant shadow-[0px_4px_20px_rgba(11,44,71,0.05)] flex flex-col lg:flex-row lg:items-center gap-md lg:gap-xl">
-                <div className="flex items-center gap-md lg:w-1/3">
-                  <div className="w-16 h-16 rounded-xl bg-primary-fixed flex items-center justify-center shrink-0">
-                    <span className="material-symbols-outlined text-on-primary-fixed text-3xl">content_cut</span>
-                  </div>
-                  <div>
-                    <h3 className="font-headline-md text-headline-md text-primary truncate">The Modern Barber</h3>
-                    <p className="text-on-surface-variant font-label-md text-label-md">Signature Haircut &amp; Beard Trim</p>
+                  <div className="flex flex-wrap gap-sm lg:w-1/4 lg:justify-end">
+                    <Link
+                      to="/reschedule/$bookingId"
+                      params={{ bookingId: b.id }}
+                      className="flex-1 lg:flex-none px-md py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors text-center"
+                    >
+                      Reschedule
+                    </Link>
+                    <button className="flex-1 lg:flex-none px-md py-2 border border-error text-error rounded-lg font-label-md text-label-md hover:bg-error-container/20 transition-colors">
+                      Cancel
+                    </button>
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-md lg:flex-1 lg:justify-center">
-                  <div className="flex items-center gap-sm bg-surface-container px-md py-2 rounded-lg">
-                    <span className="material-symbols-outlined text-outline">calendar_today</span>
-                    <div>
-                      <p className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Date &amp; Time</p>
-                      <p className="font-body-md text-body-md font-semibold">Oct 28, 2024 • 10:30 AM</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-sm bg-surface-container px-md py-2 rounded-lg">
-                    <span className="material-symbols-outlined text-outline">info</span>
-                    <div>
-                      <p className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</p>
-                      <p className="font-body-md text-body-md font-semibold text-on-surface-variant">Confirmed</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-sm lg:w-1/4 lg:justify-end">
-                  <button className="flex-1 lg:flex-none px-md py-2 bg-surface-container text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-variant transition-colors">Reschedule</button>
-                  <button className="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors" title="View Details">
-                    <span className="material-symbols-outlined">more_horiz</span>
-                  </button>
-                </div>
-              </div>
-            </>
-          )}
+              ))
+            ))}
+
           {activeTab === "completed" && (
             <div className="booking-card-hover bg-surface-container-lowest/50 p-md md:p-lg rounded-xl border border-surface-variant border-dashed flex flex-col lg:flex-row lg:items-center gap-md lg:gap-xl">
               <div className="flex items-center gap-md lg:w-1/3 grayscale opacity-70">

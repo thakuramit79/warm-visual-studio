@@ -21,6 +21,7 @@ import { Route as QueueRouteImport } from './routes/queue'
 import { Route as ReviewRouteImport } from './routes/review'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SlotsRouteImport } from './routes/slots'
+import { Route as RescheduleBookingIdRouteImport } from './routes/reschedule.$bookingId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,6 +83,11 @@ const SlotsRoute = SlotsRouteImport.update({
   path: '/slots',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RescheduleBookingIdRoute = RescheduleBookingIdRouteImport.update({
+  id: '/reschedule/$bookingId',
+  path: '/reschedule/$bookingId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -96,6 +102,7 @@ export interface FileRoutesByFullPath {
   '/review': typeof ReviewRoute
   '/services': typeof ServicesRoute
   '/slots': typeof SlotsRoute
+  '/reschedule/$bookingId': typeof RescheduleBookingIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,6 +117,7 @@ export interface FileRoutesByTo {
   '/review': typeof ReviewRoute
   '/services': typeof ServicesRoute
   '/slots': typeof SlotsRoute
+  '/reschedule/$bookingId': typeof RescheduleBookingIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/review': typeof ReviewRoute
   '/services': typeof ServicesRoute
   '/slots': typeof SlotsRoute
+  '/reschedule/$bookingId': typeof RescheduleBookingIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/services'
     | '/slots'
+    | '/reschedule/$bookingId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/services'
     | '/slots'
+    | '/reschedule/$bookingId'
   id:
     | '__root__'
     | '/'
@@ -169,6 +180,7 @@ export interface FileRouteTypes {
     | '/review'
     | '/services'
     | '/slots'
+    | '/reschedule/$bookingId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,6 +196,7 @@ export interface RootRouteChildren {
   ReviewRoute: typeof ReviewRoute
   ServicesRoute: typeof ServicesRoute
   SlotsRoute: typeof SlotsRoute
+  RescheduleBookingIdRoute: typeof RescheduleBookingIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -272,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SlotsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reschedule/$bookingId': {
+      id: '/reschedule/$bookingId'
+      path: '/reschedule/$bookingId'
+      fullPath: '/reschedule/$bookingId'
+      preLoaderRoute: typeof RescheduleBookingIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -288,6 +308,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReviewRoute: ReviewRoute,
   ServicesRoute: ServicesRoute,
   SlotsRoute: SlotsRoute,
+  RescheduleBookingIdRoute: RescheduleBookingIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
