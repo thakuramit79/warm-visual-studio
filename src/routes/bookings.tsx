@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
+import { PortalShell } from "@/components/portal-shell";
 import { useUpcomingBookings } from "@/lib/bookings-store";
-
 
 export const Route = createFileRoute("/bookings")({
   head: () => ({
@@ -30,232 +30,177 @@ const tabs: { id: Tab; label: string }[] = [
   { id: "cancelled", label: "Cancelled" },
 ];
 
-const bookingsByTab: Record<Tab, { key: string }[]> = {
-  upcoming: [{ key: "spa" }, { key: "barber" }],
-  completed: [{ key: "gym" }],
-  cancelled: [],
-};
+const cardClass =
+  "bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col lg:flex-row lg:items-center gap-md";
 
 function Bookings() {
   const [activeTab, setActiveTab] = useState<Tab>("upcoming");
   const [search, setSearch] = useState("");
   const { bookings: upcoming } = useUpcomingBookings();
 
-  const cards = bookingsByTab[activeTab];
-
+  const query = search.trim().toLowerCase();
+  const visible = query
+    ? upcoming.filter(
+        (b) =>
+          b.business.toLowerCase().includes(query) || b.service.toLowerCase().includes(query),
+      )
+    : upcoming;
 
   return (
-    <div className="bg-background text-on-surface font-body-md min-h-screen">
-      <style>{`
-        .booking-card-hover { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .booking-card-hover:hover { transform: translateY(-4px); box-shadow: 0px 12px 32px rgba(11, 44, 71, 0.12); }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #dde4e4; border-radius: 10px; }
-      `}</style>
-      <header className="bg-surface/80 dark:bg-surface-container-lowest/80 backdrop-blur-md shadow-[0px_4px_20px_rgba(11,44,71,0.05)] docked full-width top-0 sticky z-50">
-        <div className="flex justify-between items-center px-md lg:px-xl h-20 w-full max-w-container-max mx-auto">
-          <div className="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">BookMyQ</div>
-          <nav className="hidden md:flex items-center gap-xl">
-            <Link className="text-on-surface-variant dark:text-outline-variant font-medium font-label-md text-label-md hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" to="/">Home</Link>
-            <Link className="text-on-surface-variant dark:text-outline-variant font-medium font-label-md text-label-md hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" to="/services">Services</Link>
-            <Link className="text-primary dark:text-primary-fixed border-b-2 border-primary font-bold pb-1 font-label-md text-label-md transition-colors" to="/bookings">Bookings</Link>
-            <Link className="text-on-surface-variant dark:text-outline-variant font-medium font-label-md text-label-md hover:text-primary dark:hover:text-primary-fixed-dim transition-colors" to="/offers">Offers</Link>
-          </nav>
-          <div className="flex items-center gap-md">
-            <button className="p-2 rounded-full hover:bg-surface-container transition-colors">
-              <span className="material-symbols-outlined text-on-surface-variant">notifications</span>
-            </button>
-            <div className="w-10 h-10 rounded-full bg-primary-fixed overflow-hidden border-2 border-primary-container">
-              <img
-                className="w-full h-full object-cover"
-                alt="A professional close-up headshot of a friendly user."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjk365OE8FElVlYHf3mwZEjDUBM5rR5NsvF6av6bWz4htk4s9nHloKLr7dC3xNhHuDEvD_kcEzhGpTlor0g51GVgkdbR5h_5ar9KEvZk482_K2WdIbYUpTbTIqmJgcsoxi07YpUq8M0Hg4VVVHSwz--tLfmXYEr-OZic0nk-i5zsxaBNAvYxRz6MzjauVE-k460INSl870FobGbZ93NSBfIy8k5oOiZKuZSZWVkSNZ8u_pUUWoO7ofUZihs_ZDLv_iCpC0Wx-4w32a"
-              />
+    <PortalShell
+      eyebrow="Account"
+      title="My bookings"
+      subtitle="Manage your active appointments and booking history in one place."
+      actions={
+        <Link
+          to="/services"
+          className="flex items-center gap-xs rounded-lg bg-primary px-md py-2.5 font-label-md text-label-md text-on-primary transition-colors hover:bg-primary-container"
+        >
+          <span className="material-symbols-outlined text-[18px]">add</span>
+          New booking
+        </Link>
+      }
+    >
+      <div className="grid grid-cols-1 gap-md sm:grid-cols-3">
+        {[
+          { label: "Upcoming", value: String(upcoming.length), icon: "event_available" },
+          { label: "Completed", value: "12", icon: "verified" },
+          { label: "Cancelled", value: "0", icon: "event_busy" },
+        ].map((stat) => (
+          <div
+            key={stat.label}
+            className="flex items-center gap-sm rounded-xl border border-outline-variant bg-surface-container-lowest p-md"
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-container text-secondary">
+              <span className="material-symbols-outlined text-[20px]">{stat.icon}</span>
+            </span>
+            <div>
+              <p className="font-label-sm text-label-sm uppercase tracking-widest text-outline">{stat.label}</p>
+              <p className="font-headline-md text-headline-md text-primary">{stat.value}</p>
             </div>
           </div>
+        ))}
+      </div>
+
+      <div className="flex flex-col gap-sm border-b border-outline-variant pb-sm md:flex-row md:items-center md:justify-between">
+        <div className="flex gap-md">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`-mb-sm border-b-2 pb-sm font-label-md text-label-md transition-colors ${
+                activeTab === tab.id
+                  ? "border-primary text-primary"
+                  : "border-transparent text-on-surface-variant hover:text-primary"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
-      </header>
-      <main className="max-w-container-max mx-auto px-md lg:px-xl py-lg">
-        <section className="mb-lg">
-          <div className="bg-surface-container-low rounded-xl p-md md:p-lg flex flex-col md:flex-row items-center gap-md md:gap-xl border border-surface-variant/50">
-            <div className="relative">
-              <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-on-primary shadow-sm">
-                <img
-                  className="w-full h-full object-cover"
-                  alt="A high-quality profile photograph of a smiling customer."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwGhwaL-QBjvPS6h-YDCfp4bF185uStLUu1ZK9TzjeGODAOlmPujSC-X-37osUSVUoRwzOLL556Oxy3RqbPPs-WZKSmP1Mbc7Xmez3YT9usT--TKwcY9GotHN8Zb0w1Bfus2BU9hriF7a8z_1YnVqYCG29TS6all5R5M5lSBcSwygM1Qbk0iRaVjA3DG1-R4vz0Il022_dAbhuP_A_T_uA3Vju6H0w_fqE7PXQjqZei5IBMrfwNwDXHdp68PYTunpQTtQEypzOD8xJ"
-                />
-              </div>
-              <div className="absolute bottom-1 right-1 w-6 h-6 bg-secondary rounded-full border-4 border-surface-container-low"></div>
+        <div className="relative">
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-outline">
+            search
+          </span>
+          <input
+            className="w-full rounded-lg border border-outline-variant bg-surface-container-low py-2 pl-10 pr-md font-body-md text-body-md outline-none transition-colors focus:border-secondary md:w-64"
+            placeholder="Search bookings..."
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-sm">
+        {activeTab === "upcoming" &&
+          (visible.length === 0 ? (
+            <div className="rounded-xl border border-dashed border-outline-variant py-lg text-center font-body-md text-on-surface-variant">
+              No upcoming bookings.
             </div>
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="font-headline-lg text-headline-lg text-primary mb-xs">Welcome back, Alexandra</h1>
-              <p className="text-on-surface-variant font-body-md mb-md">Manage your active appointments and booking history in one place.</p>
-              <div className="flex flex-wrap justify-center md:justify-start gap-md">
-                <div className="bg-surface-container-highest px-md py-sm rounded-lg flex items-center gap-sm">
-                  <span className="material-symbols-outlined text-secondary">event_available</span>
-                  <span className="font-label-md text-label-md text-on-surface">3 Upcoming</span>
+          ) : (
+            visible.map((b) => (
+              <div key={b.id} className={cardClass}>
+                <div className="flex items-center gap-sm lg:w-1/3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-surface-container text-secondary">
+                    <span className="material-symbols-outlined text-[22px]">{b.icon}</span>
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="truncate font-headline-md text-headline-md text-primary">{b.business}</h3>
+                    <p className="truncate font-label-md text-label-md text-on-surface-variant">{b.service}</p>
+                  </div>
                 </div>
-                <div className="bg-surface-container-highest px-md py-sm rounded-lg flex items-center gap-sm">
-                  <span className="material-symbols-outlined text-on-tertiary-container">verified</span>
-                  <span className="font-label-md text-label-md text-on-surface">12 Completed</span>
+                <div className="grid flex-1 grid-cols-2 gap-md">
+                  <div>
+                    <p className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Date &amp; time</p>
+                    <p className="font-body-md text-body-md font-semibold text-on-surface">
+                      {b.date} • {b.time}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Status</p>
+                    <p
+                      className={`font-body-md text-body-md font-semibold ${
+                        b.highlight ? "text-secondary" : "text-on-surface-variant"
+                      }`}
+                    >
+                      {b.status}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-sm lg:justify-end">
+                  <Link
+                    to="/reschedule/$bookingId"
+                    params={{ bookingId: b.id }}
+                    className="flex-1 rounded-lg bg-primary px-md py-2.5 text-center font-label-md text-label-md text-on-primary transition-colors hover:bg-primary-container lg:flex-none"
+                  >
+                    Reschedule
+                  </Link>
+                  <button className="flex-1 rounded-lg border border-outline-variant px-md py-2.5 font-label-md text-label-md text-error transition-colors hover:bg-error-container/30 lg:flex-none">
+                    Cancel
+                  </button>
                 </div>
               </div>
-            </div>
-            <button className="bg-primary text-on-primary px-xl py-md rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95 flex items-center gap-sm">
-              <span className="material-symbols-outlined text-xl">add</span>
-              New Booking
-            </button>
-          </div>
-        </section>
-        <section className="mb-md">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-md border-b border-surface-variant">
-            <div className="flex gap-lg">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`pb-md border-b-2 font-label-md text-label-md transition-all ${
-                    activeTab === tab.id
-                      ? "border-secondary text-secondary font-bold"
-                      : "border-transparent text-on-surface-variant font-medium hover:text-secondary"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center gap-sm mb-md md:mb-0">
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
-                <input
-                  className="pl-10 pr-md py-2 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md focus:ring-2 focus:ring-secondary/20 focus:border-secondary outline-none w-full md:w-64 transition-all"
-                  placeholder="Search bookings..."
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
+            ))
+          ))}
+
+        {activeTab === "completed" && (
+          <div className={cardClass}>
+            <div className="flex items-center gap-sm lg:w-1/3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-surface-container text-on-surface-variant">
+                <span className="material-symbols-outlined text-[22px]">fitness_center</span>
+              </span>
+              <div className="min-w-0">
+                <h3 className="truncate font-headline-md text-headline-md text-primary">Peak Performance Gym</h3>
+                <p className="truncate font-label-md text-label-md text-on-surface-variant">
+                  Personal Training Session
+                </p>
               </div>
-              <button className="p-2 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">
-                <span className="material-symbols-outlined text-on-surface-variant">filter_list</span>
+            </div>
+            <div className="flex-1">
+              <p className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Status</p>
+              <p className="font-body-md text-body-md font-semibold text-on-surface-variant">Completed Oct 20</p>
+            </div>
+            <div className="flex gap-sm lg:justify-end">
+              <Link
+                to="/services"
+                className="flex-1 rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-2.5 text-center font-label-md text-label-md text-primary transition-colors hover:bg-surface-container lg:flex-none"
+              >
+                Repeat
+              </Link>
+              <button className="flex-1 rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-2.5 font-label-md text-label-md text-primary transition-colors hover:bg-surface-container lg:flex-none">
+                Invoice
               </button>
             </div>
           </div>
-        </section>
-        <section className="grid grid-cols-1 gap-md" id="bookings-container" style={{ transition: "opacity 0.3s" }}>
-          {activeTab === "upcoming" &&
-            (upcoming.length === 0 ? (
-              <div className="text-center py-xl text-on-surface-variant font-body-md">No upcoming bookings.</div>
-            ) : (
-              upcoming.map((b) => (
-                <div
-                  key={b.id}
-                  className="booking-card-hover bg-surface-container-lowest p-md md:p-lg rounded-xl border border-surface-variant shadow-[0px_4px_20px_rgba(11,44,71,0.05)] flex flex-col lg:flex-row lg:items-center gap-md lg:gap-xl"
-                >
-                  <div className="flex items-center gap-md lg:w-1/3">
-                    <div className={`w-16 h-16 rounded-xl ${b.iconBg} flex items-center justify-center shrink-0`}>
-                      <span className={`material-symbols-outlined ${b.iconFg} text-3xl`}>{b.icon}</span>
-                    </div>
-                    <div>
-                      <h3 className="font-headline-md text-headline-md text-primary truncate">{b.business}</h3>
-                      <p className="text-on-surface-variant font-label-md text-label-md">{b.service}</p>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-md lg:flex-1 lg:justify-center">
-                    <div className="flex items-center gap-sm bg-surface-container px-md py-2 rounded-lg">
-                      <span className={`material-symbols-outlined ${b.highlight ? "text-secondary" : "text-outline"}`}>calendar_today</span>
-                      <div>
-                        <p className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Date &amp; Time</p>
-                        <p className="font-body-md text-body-md font-semibold">{b.date} • {b.time}</p>
-                      </div>
-                    </div>
-                    <div
-                      className={`flex items-center gap-sm px-md py-2 rounded-lg ${
-                        b.highlight ? "bg-secondary-container/30 border border-secondary/20" : "bg-surface-container"
-                      }`}
-                    >
-                      <span className={`material-symbols-outlined ${b.highlight ? "text-secondary animate-pulse" : "text-outline"}`}>
-                        {b.highlight ? "timer" : "info"}
-                      </span>
-                      <div>
-                        <p className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</p>
-                        <p className={`font-body-md text-body-md font-semibold ${b.highlight ? "font-bold text-on-secondary-container" : "text-on-surface-variant"}`}>
-                          {b.status}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-sm lg:w-1/4 lg:justify-end">
-                    <Link
-                      to="/reschedule/$bookingId"
-                      params={{ bookingId: b.id }}
-                      className="flex-1 lg:flex-none px-md py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors text-center"
-                    >
-                      Reschedule
-                    </Link>
-                    <button className="flex-1 lg:flex-none px-md py-2 border border-error text-error rounded-lg font-label-md text-label-md hover:bg-error-container/20 transition-colors">
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              ))
-            ))}
+        )}
 
-          {activeTab === "completed" && (
-            <div className="booking-card-hover bg-surface-container-lowest/50 p-md md:p-lg rounded-xl border border-surface-variant border-dashed flex flex-col lg:flex-row lg:items-center gap-md lg:gap-xl">
-              <div className="flex items-center gap-md lg:w-1/3 grayscale opacity-70">
-                <div className="w-16 h-16 rounded-xl bg-tertiary-fixed-dim flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-on-tertiary-fixed text-3xl">fitness_center</span>
-                </div>
-                <div>
-                  <h3 className="font-headline-md text-headline-md text-primary truncate">Peak Performance Gym</h3>
-                  <p className="text-on-surface-variant font-label-md text-label-md">Personal Training Session</p>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-md lg:flex-1 lg:justify-center opacity-70">
-                <div className="flex items-center gap-sm px-md py-2">
-                  <span className="material-symbols-outlined text-outline">task_alt</span>
-                  <div>
-                    <p className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Status</p>
-                    <p className="font-body-md text-body-md font-semibold">Completed Oct 20</p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-sm lg:w-1/4 lg:justify-end">
-                <button className="flex-1 lg:flex-none px-md py-2 border border-secondary text-secondary rounded-lg font-label-md text-label-md hover:bg-secondary-container/20 transition-colors flex items-center justify-center gap-xs">
-                  <span className="material-symbols-outlined text-lg">repeat</span> Repeat
-                </button>
-                <button className="flex-1 lg:flex-none px-md py-2 bg-surface-container text-on-surface font-label-md text-label-md rounded-lg hover:bg-surface-variant transition-colors flex items-center justify-center gap-xs">
-                  <span className="material-symbols-outlined text-lg">receipt_long</span> Invoice
-                </button>
-              </div>
-            </div>
-          )}
-          {activeTab === "cancelled" && cards.length === 0 && (
-            <div className="text-center py-xl text-on-surface-variant font-body-md">No cancelled bookings.</div>
-          )}
-        </section>
-      </main>
-      <div className="fixed bottom-md right-md z-50 flex flex-col items-center justify-center">
-        <Link
-          to="/concierge"
-          className="bg-gradient-to-br from-secondary to-tertiary-fixed-dim text-secondary dark:text-secondary-fixed w-16 h-16 rounded-full shadow-[0px_12px_32px_rgba(0,105,111,0.25)] flex items-center justify-center hover:scale-110 transition-transform duration-300 animate-pulse-slow active:scale-95 group"
-        >
-          <span className="material-symbols-outlined text-on-secondary text-3xl transition-transform duration-500 group-hover:rotate-12" style={{ fontVariationSettings: "'FILL' 1" }}>
-            smart_toy
-          </span>
-        </Link>
+        {activeTab === "cancelled" && (
+          <div className="rounded-xl border border-dashed border-outline-variant py-lg text-center font-body-md text-on-surface-variant">
+            No cancelled bookings.
+          </div>
+        )}
       </div>
-      <footer className="w-full px-md flex flex-col md:flex-row justify-between items-center gap-sm mt-xl border-t border-surface-variant dark:border-outline-variant py-md bg-background dark:bg-background">
-        <div className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Powered by BookMyQ • Built for SMEs</div>
-        <div className="flex gap-md">
-          <a className="text-outline font-label-sm text-label-sm hover:text-on-background transition-colors" href="#">Privacy Policy</a>
-          <a className="text-outline font-label-sm text-label-sm hover:text-on-background transition-colors" href="#">Terms of Service</a>
-          <a className="text-outline font-label-sm text-label-sm hover:text-on-background transition-colors" href="#">Contact Support</a>
-        </div>
-        <div className="text-outline font-label-sm text-label-sm">© 2024 BookMyQ</div>
-      </footer>
-    </div>
+    </PortalShell>
   );
 }
