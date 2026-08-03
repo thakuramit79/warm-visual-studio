@@ -1,5 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import { PortalShell } from "@/components/portal-shell";
 
 export const Route = createFileRoute("/concierge")({
   head: () => ({
@@ -76,218 +77,154 @@ function Concierge() {
   };
 
   return (
-    <div className="bg-background text-on-surface font-body-md overflow-hidden min-h-screen">
-      <header className="bg-surface/80 backdrop-blur-md shadow-sm fixed top-0 w-full z-50">
-        <div className="flex justify-between items-center px-md lg:px-xl h-20 w-full max-w-container-max mx-auto">
-          <div className="flex items-center gap-base">
-            <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
-            <h1 className="font-headline-md text-headline-md font-bold text-primary">BookMyQ</h1>
+    <PortalShell title="AI Concierge" bare>
+      <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-3xl flex-col px-md py-md">
+        <div className="flex min-h-0 flex-1 flex-col card-surface overflow-hidden">
+          <div className="flex items-center justify-between border-b border-outline-variant bg-surface-container-low px-md py-sm">
+            <div className="flex items-center gap-sm">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-on-secondary">
+                <span className="material-symbols-outlined text-xl">smart_toy</span>
+              </div>
+              <div>
+                <p className="font-label-md text-label-md text-on-surface">Lumina Assistant</p>
+                <p className="flex items-center gap-1 font-label-sm text-label-sm text-secondary">
+                  <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                  AI is Online
+                </p>
+              </div>
+            </div>
           </div>
-          <nav className="hidden md:flex gap-lg">
-            <Link className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" to="/">Home</Link>
-            <Link className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" to="/services">Services</Link>
-            <Link className="font-label-md text-label-md text-primary border-b-2 border-primary font-bold pb-1" to="/concierge">AI Assistant</Link>
-            <a className="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Bookings</a>
-          </nav>
-          <div className="flex items-center gap-md">
-            <Link to="/notifications">
-              <span className="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
-            </Link>
-            <span className="material-symbols-outlined text-on-surface-variant cursor-pointer">account_circle</span>
-          </div>
-        </div>
-      </header>
-      <main className="pt-20 h-screen w-full flex items-center justify-center relative overflow-hidden">
-        <div className="container max-w-4xl h-[calc(100vh-140px)] mx-auto px-md md:px-lg z-10 flex flex-col">
-          <div className="flex-1 glass-panel rounded-3xl shadow-[0px_12px_32px_rgba(11,44,71,0.08)] border border-surface-variant overflow-hidden flex flex-col">
-            <div className="px-md py-base border-b border-surface-variant flex items-center justify-between bg-surface-container-low">
-              <div className="flex items-center gap-sm">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-secondary to-tertiary-fixed-dim flex items-center justify-center shadow-sm">
-                  <span className="material-symbols-outlined text-white text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>smart_toy</span>
+
+          <div ref={chatRef} className="flex flex-1 flex-col gap-lg overflow-y-auto p-md">
+            {messages.map((m) =>
+              m.role === "assistant" ? (
+                <div key={m.id} className="flex max-w-[85%] items-start gap-sm">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-container-highest">
+                    <span className="material-symbols-outlined text-sm text-primary">smart_toy</span>
+                  </div>
+                  <div className="rounded-2xl rounded-tl-none bg-surface-container p-md">
+                    <p className="font-body-md text-body-md text-on-surface">{m.text}</p>
+                    <p className="mt-xs text-[10px] text-outline">{m.time}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-label-md text-label-md text-on-surface">Lumina Assistant</p>
-                  <p className="text-label-sm text-secondary font-medium flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim animate-pulse"></span>
-                    AI is Online
+              ) : (
+                <div key={m.id} className="flex max-w-[85%] flex-row-reverse items-start gap-sm self-end">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary">
+                    <span className="material-symbols-outlined text-sm text-on-primary">person</span>
+                  </div>
+                  <div className="rounded-2xl rounded-tr-none bg-primary p-md text-on-primary">
+                    <p className="font-body-md text-body-md">{m.text}</p>
+                    <p className="mt-xs text-right text-[10px] opacity-70">{m.time}</p>
+                  </div>
+                </div>
+              ),
+            )}
+
+            <div className="flex max-w-[90%] items-start gap-sm">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-container-highest">
+                <span className="material-symbols-outlined text-sm text-primary">smart_toy</span>
+              </div>
+              <div className="flex w-full flex-col gap-sm">
+                <div className="rounded-2xl rounded-tl-none bg-surface-container p-md">
+                  <p className="font-body-md text-body-md text-on-surface">
+                    Absolutely. We have several options available. Which service would you prefer?
                   </p>
                 </div>
-              </div>
-              <div className="flex items-center gap-sm">
-                <button className="p-2 hover:bg-surface-variant rounded-full transition-colors">
-                  <span className="material-symbols-outlined text-on-surface-variant">search</span>
-                </button>
-                <button className="p-2 hover:bg-surface-variant rounded-full transition-colors">
-                  <span className="material-symbols-outlined text-on-surface-variant">more_vert</span>
-                </button>
-              </div>
-            </div>
-            <div ref={chatRef} className="flex-1 overflow-y-auto p-md space-y-lg flex flex-col" id="chat-messages">
-              {messages.map((m) =>
-                m.role === "assistant" ? (
-                  <div key={m.id} className="flex items-start gap-sm max-w-[85%]">
-                    <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
-                      <span className="material-symbols-outlined text-primary text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>smart_toy</span>
-                    </div>
-                    <div className="bg-surface-container rounded-2xl rounded-tl-none p-md shadow-sm">
-                      <p className="font-body-md text-body-md text-on-surface">{m.text}</p>
-                      <p className="text-[10px] text-outline mt-xs">{m.time}</p>
-                    </div>
-                  </div>
-                ) : (
-                  <div key={m.id} className="flex items-start gap-sm max-w-[85%] self-end flex-row-reverse">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-sm">
-                      <span className="material-symbols-outlined text-white text-sm">person</span>
-                    </div>
-                    <div className="bg-primary text-white rounded-2xl rounded-tr-none p-md shadow-md">
-                      <p className="font-body-md text-body-md">{m.text}</p>
-                      <p className="text-[10px] opacity-70 mt-xs text-right">{m.time}</p>
-                    </div>
-                  </div>
-                ),
-              )}
-
-              {/* Rich UI: Service Picker (static example content) */}
-              <div className="flex items-start gap-sm max-w-[90%]">
-                <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-primary text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>smart_toy</span>
-                </div>
-                <div className="flex flex-col gap-sm w-full">
-                  <div className="bg-surface-container rounded-2xl rounded-tl-none p-md shadow-sm">
-                    <p className="font-body-md text-body-md text-on-surface">Absolutely. We have several options available. Which service would you prefer?</p>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-sm">
-                    <div className="bg-white border border-surface-variant p-sm rounded-xl hover:shadow-lg transition-all cursor-pointer group">
-                      <div
-                        className="h-24 w-full rounded-lg mb-sm bg-cover bg-center overflow-hidden"
-                        style={{
-                          backgroundImage:
-                            "url('https://lh3.googleusercontent.com/aida-public/AB6AXuASPvaPZOeSMqQjhIwhBDjLoehzb6e-69scz2zGrnnhhrA5nlaOoQVqgXO8ARcthT8GOd6Bi4GyMYYjCQjgNQsd81EjWLvoyuxkv855qB_Njg6AFk1UbW2JWzukUjtdLIUqRbhP68ua1b2zatWUegW8lBaGBdwcNwnPOs1CBfSifdIUNtEhBmsTMtNYeU4Br2hLISY-Cubtjzc7p7-Uh376txriy6tno3uE_Zu2aZRCLCqMMvrjqXWCEbK3E_Zv-jJxfGAVF89nwMF-')",
-                        }}
-                      ></div>
-                      <p className="font-label-md text-on-surface">Deep Tissue Massage</p>
-                      <p className="text-label-sm text-on-surface-variant">60 mins • $120</p>
-                      <button
-                        className="mt-base w-full py-xs bg-secondary-container text-on-secondary-container rounded-lg font-label-sm group-hover:bg-secondary group-hover:text-white transition-colors"
-                        onClick={() => sendMessage("I'd like to book the Deep Tissue Massage")}
-                      >
-                        Select
-                      </button>
-                    </div>
-                    <div className="bg-white border border-surface-variant p-sm rounded-xl hover:shadow-lg transition-all cursor-pointer group">
-                      <div
-                        className="h-24 w-full rounded-lg mb-sm bg-cover bg-center overflow-hidden"
-                        style={{
-                          backgroundImage:
-                            "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBg46YzbtcLFyCEjol7AWpfNK-lpgv9qz76fnn2LcF95rxXXLw1ZR3b5ns7Zn5bXCaivYQeCziCuDy5gQdoigjBOnRX0MeeOsiQyhtX7c-i2lwQnXJeSaOgidSfRcrgGnBVVNvLPSbQ-7mlV8aapulJJL6LCAcrd7VeSN3H_342stm6znrmIqdBFvxhpSArXCs843JnF13wzm89tlhFs3aPmFK1hUkqRglwupWUTdSiZEGSiAb_UV6vFAZuN1t5wi0ZGIBkq7nPY8n')",
-                        }}
-                      ></div>
-                      <p className="font-label-md text-on-surface">Swedish Massage</p>
-                      <p className="text-label-sm text-on-surface-variant">90 mins • $150</p>
-                      <button
-                        className="mt-base w-full py-xs bg-secondary-container text-on-secondary-container rounded-lg font-label-sm group-hover:bg-secondary group-hover:text-white transition-colors"
-                        onClick={() => sendMessage("I'd like to book the Swedish Massage")}
-                      >
-                        Select
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Rich UI: Slot Picker (static example content) */}
-              <div className="flex items-start gap-sm max-w-[85%]">
-                <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-primary text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>smart_toy</span>
-                </div>
-                <div className="flex flex-col gap-sm w-full">
-                  <div className="bg-surface-container rounded-2xl rounded-tl-none p-md shadow-sm">
-                    <p className="font-body-md text-body-md text-on-surface">Great choice! When would you like to come in? Here are available slots for Friday.</p>
-                  </div>
-                  <div className="bg-white border border-surface-variant p-md rounded-2xl shadow-sm">
-                    <div className="flex items-center justify-between mb-base">
-                      <p className="font-label-md text-on-surface">Friday, Nov 24</p>
-                      <button className="text-secondary font-label-sm">Change Date</button>
-                    </div>
-                    <SlotPicker onSelect={(slot) => sendMessage(`I'll take the ${slot} slot`)} />
-                  </div>
-                </div>
-              </div>
-
-              {isTyping && (
-                <div className="flex items-start gap-sm max-w-[85%]">
-                  <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
-                    <span className="material-symbols-outlined text-primary text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>smart_toy</span>
-                  </div>
-                  <div className="bg-surface-container rounded-2xl rounded-tl-none p-md shadow-sm">
-                    <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-outline-variant rounded-full animate-bounce"></span>
-                      <span className="w-2 h-2 bg-outline-variant rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></span>
-                      <span className="w-2 h-2 bg-outline-variant rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="p-md border-t border-surface-variant bg-surface-container-lowest">
-              <div className="flex gap-sm overflow-x-auto pb-md no-scrollbar">
-                {suggestedPrompts.map((prompt) => (
-                  <button
-                    key={prompt}
-                    className="shrink-0 px-md py-1.5 rounded-full border border-surface-variant bg-white text-on-surface-variant font-label-md hover:border-secondary hover:text-secondary transition-all"
-                    onClick={() => sendMessage(prompt)}
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
-              <div className="chat-gradient-border rounded-full">
-                <div className="bg-white rounded-full flex items-center px-md py-2 gap-sm">
-                  <button className="text-on-surface-variant hover:text-primary transition-colors flex items-center">
-                    <span className="material-symbols-outlined">add_circle</span>
-                  </button>
-                  <input
-                    className="flex-1 border-none focus:ring-0 font-body-md text-on-surface placeholder:text-outline-variant bg-transparent"
-                    placeholder="Type a message..."
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") sendMessage(input);
-                    }}
-                  />
-                  <div className="flex items-center gap-base">
-                    <button className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container transition-colors text-secondary" title="Voice Interaction">
-                      <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>mic</span>
-                    </button>
+                <div className="grid grid-cols-1 gap-sm sm:grid-cols-2">
+                  <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-sm">
+                    <p className="font-label-md text-on-surface">Deep Tissue Massage</p>
+                    <p className="text-label-sm text-on-surface-variant">60 mins • $120</p>
                     <button
-                      className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-md hover:opacity-90 transition-opacity"
-                      onClick={() => sendMessage(input)}
+                      className="mt-base w-full rounded-lg bg-secondary-container py-xs font-label-sm text-on-secondary-container hover:bg-secondary hover:text-on-secondary"
+                      onClick={() => sendMessage("I'd like to book the Deep Tissue Massage")}
                     >
-                      <span className="material-symbols-outlined">send</span>
+                      Select
+                    </button>
+                  </div>
+                  <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-sm">
+                    <p className="font-label-md text-on-surface">Swedish Massage</p>
+                    <p className="text-label-sm text-on-surface-variant">90 mins • $150</p>
+                    <button
+                      className="mt-base w-full rounded-lg bg-secondary-container py-xs font-label-sm text-on-secondary-container hover:bg-secondary hover:text-on-secondary"
+                      onClick={() => sendMessage("I'd like to book the Swedish Massage")}
+                    >
+                      Select
                     </button>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div className="flex max-w-[85%] items-start gap-sm">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-container-highest">
+                <span className="material-symbols-outlined text-sm text-primary">smart_toy</span>
+              </div>
+              <div className="flex w-full flex-col gap-sm">
+                <div className="rounded-2xl rounded-tl-none bg-surface-container p-md">
+                  <p className="font-body-md text-body-md text-on-surface">
+                    Great choice! When would you like to come in? Here are available slots for Friday.
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-outline-variant bg-surface-container-lowest p-md">
+                  <div className="mb-base flex items-center justify-between">
+                    <p className="font-label-md text-on-surface">Friday, Nov 24</p>
+                    <button className="font-label-sm text-secondary">Change Date</button>
+                  </div>
+                  <SlotPicker onSelect={(slot) => sendMessage(`I'll take the ${slot} slot`)} />
+                </div>
+              </div>
+            </div>
+
+            {isTyping && (
+              <div className="flex max-w-[85%] items-start gap-sm">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-container-highest">
+                  <span className="material-symbols-outlined text-sm text-primary">smart_toy</span>
+                </div>
+                <div className="rounded-2xl rounded-tl-none bg-surface-container p-md">
+                  <div className="flex gap-1">
+                    <span className="h-2 w-2 rounded-full bg-outline-variant" />
+                    <span className="h-2 w-2 rounded-full bg-outline-variant" />
+                    <span className="h-2 w-2 rounded-full bg-outline-variant" />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          <div className="hidden lg:flex flex-col items-center gap-xs fixed bottom-md right-md z-50">
-            <p className="font-label-sm text-outline-variant uppercase tracking-widest bg-surface/80 px-2 rounded backdrop-blur-sm">Concierge Mode</p>
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-secondary to-tertiary-fixed-dim shadow-[0px_12px_32px_rgba(0,105,111,0.25)] flex items-center justify-center text-white cursor-pointer active:scale-95 transition-transform animate-float">
-              <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>smart_toy</span>
+
+          <div className="border-t border-outline-variant bg-surface-container-lowest p-md">
+            <div className="mb-md flex gap-sm overflow-x-auto pb-xs">
+              {suggestedPrompts.map((prompt) => (
+                <button
+                  key={prompt}
+                  className="shrink-0 rounded-full border border-outline-variant bg-surface-container-lowest px-md py-1.5 font-label-md text-on-surface-variant hover:border-secondary hover:text-secondary"
+                  onClick={() => sendMessage(prompt)}
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+            <div className="flex items-center gap-sm rounded-full border border-outline-variant bg-surface-container-lowest px-md py-2">
+              <input
+                className="flex-1 border-none bg-transparent font-body-md text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-0"
+                placeholder="Type a message..."
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") sendMessage(input);
+                }}
+              />
+              <button
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-on-primary hover:bg-primary-container"
+                onClick={() => sendMessage(input)}
+              >
+                <span className="material-symbols-outlined">send</span>
+              </button>
             </div>
           </div>
         </div>
-      </main>
-      <footer className="w-full px-md flex flex-col md:flex-row justify-between items-center gap-sm mt-xl py-md border-t border-surface-variant fixed bottom-0 bg-background z-40">
-        <p className="font-label-sm text-label-sm text-outline">Powered by BookMyQ • Built for SMEs</p>
-        <div className="flex gap-md">
-          <a className="font-label-sm text-label-sm text-outline hover:text-on-background transition-colors" href="#">Privacy Policy</a>
-          <a className="font-label-sm text-label-sm text-outline hover:text-on-background transition-colors" href="#">Terms of Service</a>
-          <a className="font-label-sm text-label-sm text-outline hover:text-on-background transition-colors" href="#">Contact Support</a>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </PortalShell>
   );
 }
 
@@ -302,7 +239,7 @@ function SlotPicker({ onSelect }: { onSelect: (slot: string) => void }) {
         slot === disabled ? (
           <button
             key={slot}
-            className="py-sm border border-outline-variant text-outline-variant rounded-lg font-label-md cursor-not-allowed bg-surface-container-low"
+            className="cursor-not-allowed rounded-lg border border-outline-variant bg-surface-container-low py-sm font-label-md text-outline-variant"
             disabled
           >
             {slot}
@@ -312,8 +249,8 @@ function SlotPicker({ onSelect }: { onSelect: (slot: string) => void }) {
             key={slot}
             className={
               selected === slot
-                ? "py-sm bg-primary text-white rounded-lg font-label-md shadow-md"
-                : "py-sm border border-secondary text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-colors"
+                ? "rounded-lg bg-primary py-sm font-label-md text-on-primary"
+                : "rounded-lg border border-secondary py-sm font-label-md text-secondary hover:bg-secondary hover:text-on-secondary"
             }
             onClick={() => {
               setSelected(slot);
