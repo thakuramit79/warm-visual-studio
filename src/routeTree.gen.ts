@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BookingMethodRouteImport } from './routes/booking-method'
 import { Route as BookingsRouteImport } from './routes/bookings'
 import { Route as BusinessRouteImport } from './routes/business'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ConciergeRouteImport } from './routes/concierge'
 import { Route as ConfirmationRouteImport } from './routes/confirmation'
 import { Route as NotificationsRouteImport } from './routes/notifications'
@@ -41,6 +42,11 @@ const BookingsRoute = BookingsRouteImport.update({
 const BusinessRoute = BusinessRouteImport.update({
   id: '/business',
   path: '/business',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConciergeRoute = ConciergeRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/booking-method': typeof BookingMethodRoute
   '/bookings': typeof BookingsRoute
   '/business': typeof BusinessRoute
+  '/checkout': typeof CheckoutRoute
   '/concierge': typeof ConciergeRoute
   '/confirmation': typeof ConfirmationRoute
   '/notifications': typeof NotificationsRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/booking-method': typeof BookingMethodRoute
   '/bookings': typeof BookingsRoute
   '/business': typeof BusinessRoute
+  '/checkout': typeof CheckoutRoute
   '/concierge': typeof ConciergeRoute
   '/confirmation': typeof ConfirmationRoute
   '/notifications': typeof NotificationsRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/booking-method': typeof BookingMethodRoute
   '/bookings': typeof BookingsRoute
   '/business': typeof BusinessRoute
+  '/checkout': typeof CheckoutRoute
   '/concierge': typeof ConciergeRoute
   '/confirmation': typeof ConfirmationRoute
   '/notifications': typeof NotificationsRoute
@@ -142,6 +151,7 @@ export interface FileRouteTypes {
     | '/booking-method'
     | '/bookings'
     | '/business'
+    | '/checkout'
     | '/concierge'
     | '/confirmation'
     | '/notifications'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
     | '/booking-method'
     | '/bookings'
     | '/business'
+    | '/checkout'
     | '/concierge'
     | '/confirmation'
     | '/notifications'
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/booking-method'
     | '/bookings'
     | '/business'
+    | '/checkout'
     | '/concierge'
     | '/confirmation'
     | '/notifications'
@@ -188,6 +200,7 @@ export interface RootRouteChildren {
   BookingMethodRoute: typeof BookingMethodRoute
   BookingsRoute: typeof BookingsRoute
   BusinessRoute: typeof BusinessRoute
+  CheckoutRoute: typeof CheckoutRoute
   ConciergeRoute: typeof ConciergeRoute
   ConfirmationRoute: typeof ConfirmationRoute
   NotificationsRoute: typeof NotificationsRoute
@@ -227,6 +240,13 @@ declare module '@tanstack/react-router' {
       path: '/business'
       fullPath: '/business'
       preLoaderRoute: typeof BusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/concierge': {
@@ -300,6 +320,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookingMethodRoute: BookingMethodRoute,
   BookingsRoute: BookingsRoute,
   BusinessRoute: BusinessRoute,
+  CheckoutRoute: CheckoutRoute,
   ConciergeRoute: ConciergeRoute,
   ConfirmationRoute: ConfirmationRoute,
   NotificationsRoute: NotificationsRoute,

@@ -130,7 +130,7 @@ function CheckoutPage() {
               <div className="mt-sm flex items-center justify-between rounded-lg border border-outline-variant bg-secondary-container px-md py-sm">
                 <span className="flex items-center gap-xs font-label-md text-on-secondary-container">
                   <span className="material-symbols-outlined text-[18px]">verified</span>
-                  {appliedCode} applied — {PROMOS[appliedCode].label}
+                  {appliedCode} applied — {PROMOS[appliedCode]?.label}
                 </span>
                 <button
                   onClick={() => {
