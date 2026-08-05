@@ -1,6 +1,8 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 
+import { BrandLogo } from "@/components/brand-logo";
+
 type NavItem = { to: string; label: string; icon: string };
 
 const primaryNav: NavItem[] = [
