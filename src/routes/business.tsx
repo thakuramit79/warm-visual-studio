@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import { PortalShell } from "@/components/portal-shell";
+import { useSelectedBranch } from "@/hooks/use-selected-branch";
 
 export const Route = createFileRoute("/business")({
   head: () => ({
@@ -15,6 +15,8 @@ export const Route = createFileRoute("/business")({
 });
 
 function Business() {
+  const branch = useSelectedBranch();
+
   const actions = (
     <div className="flex flex-wrap gap-sm">
       <Link
@@ -36,11 +38,33 @@ function Business() {
 
   return (
     <PortalShell
-      eyebrow="Lumina Wellness Spa"
+      eyebrow={branch ? `Lumina Wellness Spa · ${branch.name}` : "Lumina Wellness Spa"}
       title="Where ancient healing meets modern luxury"
       subtitle="Curated wellness journeys tailored to your body's unique rhythm. 4.9 rating from 1.2k reviews."
       actions={actions}
     >
+      <section className="card-surface flex flex-col gap-sm rounded-xl border border-outline-variant bg-surface-container-low p-md md:flex-row md:items-center md:justify-between">
+        <div className="flex items-start gap-sm">
+          <span className="material-symbols-outlined text-secondary">where_to_vote</span>
+          <div>
+            <p className="font-label-md text-label-md text-primary">
+              {branch ? `You're checked in at ${branch.name}` : "No branch selected yet"}
+            </p>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              {branch
+                ? `${branch.addressLines.join(", ")} · ${branch.hours} · ${branch.waitTime} current wait`
+                : "Pick the location you're visiting to see accurate wait times and slots."}
+            </p>
+          </div>
+        </div>
+        <Link
+          to="/"
+          className="self-start rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-2 font-label-md text-primary hover:bg-surface-container"
+        >
+          Change location
+        </Link>
+      </section>
+
       <section>
         <div className="flex justify-between items-end mb-md">
           <div>
