@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
 import { PortalShell } from "@/components/portal-shell";
+import { money, useCheckout } from "@/lib/checkout-store";
 
 export const Route = createFileRoute("/confirmation")({
   head: () => ({
