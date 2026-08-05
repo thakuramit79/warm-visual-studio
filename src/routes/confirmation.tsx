@@ -24,6 +24,7 @@ export const Route = createFileRoute("/confirmation")({
 
 function Confirmation() {
   const h1Ref = useRef<HTMLHeadingElement>(null);
+  const checkout = useCheckout();
 
   useEffect(() => {}, []);
 
