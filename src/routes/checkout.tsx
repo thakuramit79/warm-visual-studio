@@ -228,11 +228,11 @@ function CheckoutPage() {
 
             <div className="rounded-lg bg-primary-container p-md">
               <div className="flex items-center justify-between">
-                <span className="font-label-md text-on-primary-container">Paying now</span>
+                <span className="font-label-md text-on-primary">Paying now</span>
                 <span className="font-headline-md text-headline-md text-on-primary">{money(totals.paidNow)}</span>
               </div>
               {payMode === "deposit" && (
-                <div className="mt-xs flex items-center justify-between font-label-md text-on-primary-container">
+                <div className="mt-xs flex items-center justify-between font-label-md text-on-primary">
                   <span>Due at counter</span>
                   <span>{money(totals.dueAtCounter)}</span>
                 </div>
