@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 import { branches, setSelectedBranchId } from "@/lib/branch-store";
 
 export const Route = createFileRoute("/")({
@@ -36,10 +37,7 @@ function Index() {
     <div className="min-h-screen bg-background text-on-surface font-body-md">
       <header className="border-b border-outline-variant bg-surface-container-lowest">
         <div className="mx-auto flex w-full max-w-container-max items-center gap-3 px-md py-md lg:px-lg">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-on-primary">
-            <span className="material-symbols-outlined text-[20px]">event_seat</span>
-          </span>
-          <span className="font-headline-md text-headline-md font-bold tracking-tight text-primary">BookMyQ</span>
+          <BrandLogo size="lg" showTagline />
           <span className="ml-auto flex items-center gap-xs rounded-full border border-outline-variant bg-surface-container-low px-sm py-1 font-label-sm text-label-sm text-on-surface-variant">
             <span className="material-symbols-outlined text-[16px] text-secondary">qr_code_scanner</span>
             Scanned check-in

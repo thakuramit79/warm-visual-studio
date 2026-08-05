@@ -1,6 +1,8 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 
+import { BrandLogo } from "@/components/brand-logo";
+
 type NavItem = { to: string; label: string; icon: string };
 
 const primaryNav: NavItem[] = [
@@ -63,11 +65,8 @@ export function PortalShell({ children, title, subtitle, eyebrow, actions, bare 
 
   const sidebar = (
     <div className="flex h-full flex-col gap-6 px-4 py-6">
-      <Link to="/" className="flex items-center gap-2.5 px-2">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-on-primary">
-          <Icon name="event_seat" className="text-[20px]" />
-        </span>
-        <span className="font-headline-md text-headline-md font-bold tracking-tight text-primary">BookMyQ</span>
+      <Link to="/" className="flex items-center gap-2.5 px-2" aria-label="BookMyQ home">
+        <BrandLogo size="md" showTagline />
       </Link>
 
       <nav className="flex flex-1 flex-col gap-6 overflow-y-auto">

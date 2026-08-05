@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+
 
 import { PortalShell } from "@/components/portal-shell";
 
@@ -16,13 +16,10 @@ export const Route = createFileRoute("/review")({
 });
 
 function ReviewPage() {
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [cardVisible, setCardVisible] = useState(false);
   const navigate = useNavigate();
 
   const confirmBooking = () => {
-    setShowSuccess(true);
-    setTimeout(() => setCardVisible(true), 10);
+    navigate({ to: "/checkout" });
   };
 
   return (
@@ -142,9 +139,10 @@ function ReviewPage() {
                 onClick={confirmBooking}
                 className="w-full bg-primary text-on-primary rounded-lg px-md py-2.5 font-label-md hover:bg-primary-container transition-colors flex items-center justify-center gap-base"
               >
-                Confirm Booking
+                Continue to payment
                 <span className="material-symbols-outlined">arrow_forward</span>
               </button>
+              <p className="mt-xs text-center font-label-sm text-outline">Apply offers and choose full or part payment next</p>
               <div className="mt-lg pt-md border-t border-outline-variant">
                 <div className="flex items-center gap-base text-outline mb-sm">
                   <span className="material-symbols-outlined text-base">security</span>
@@ -167,35 +165,7 @@ function ReviewPage() {
         </div>
       </div>
 
-      {showSuccess && (
-        <div className="fixed inset-0 z-[60] bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-md">
-          <div
-            className={`bg-surface-container-lowest p-xl rounded-2xl max-w-md w-full text-center border border-outline-variant transition-opacity duration-300 ${
-              cardVisible ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <div className="w-24 h-24 bg-secondary-container rounded-full flex items-center justify-center mx-auto mb-lg">
-              <span className="material-symbols-outlined text-secondary text-6xl">check_circle</span>
-            </div>
-            <h2 className="font-display-lg text-headline-lg text-primary mb-base">Booking Confirmed!</h2>
-            <p className="text-on-surface-variant font-body-lg mb-xl">Your appointment has been successfully scheduled. We've sent a confirmation to your email.</p>
-            <div className="space-y-sm">
-              <button
-                onClick={() => navigate({ to: "/bookings" })}
-                className="w-full bg-primary text-on-primary rounded-lg px-md py-2.5 font-label-md hover:bg-primary-container"
-              >
-                View Dashboard
-              </button>
-              <button
-                onClick={() => navigate({ to: "/confirmation" })}
-                className="w-full border border-outline-variant bg-surface-container-lowest text-primary rounded-lg px-md py-2.5 font-label-md hover:bg-surface-container"
-              >
-                Add to Calendar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      
     </PortalShell>
   );
 }
