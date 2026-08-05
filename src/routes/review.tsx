@@ -16,13 +16,10 @@ export const Route = createFileRoute("/review")({
 });
 
 function ReviewPage() {
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [cardVisible, setCardVisible] = useState(false);
   const navigate = useNavigate();
 
   const confirmBooking = () => {
-    setShowSuccess(true);
-    setTimeout(() => setCardVisible(true), 10);
+    navigate({ to: "/checkout" });
   };
 
   return (
