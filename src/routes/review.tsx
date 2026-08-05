@@ -142,9 +142,10 @@ function ReviewPage() {
                 onClick={confirmBooking}
                 className="w-full bg-primary text-on-primary rounded-lg px-md py-2.5 font-label-md hover:bg-primary-container transition-colors flex items-center justify-center gap-base"
               >
-                Confirm Booking
+                Continue to payment
                 <span className="material-symbols-outlined">arrow_forward</span>
               </button>
+              <p className="mt-xs text-center font-label-sm text-outline">Apply offers and choose full or part payment next</p>
               <div className="mt-lg pt-md border-t border-outline-variant">
                 <div className="flex items-center gap-base text-outline mb-sm">
                   <span className="material-symbols-outlined text-base">security</span>
