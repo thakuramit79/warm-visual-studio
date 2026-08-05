@@ -73,14 +73,25 @@ function Confirmation() {
               </div>
             </div>
           </div>
-          <div className="p-md bg-surface-container-low flex justify-between items-center">
+          <div className="p-md bg-surface-container-low flex flex-wrap justify-between items-center gap-sm">
             <div>
-              <p className="font-label-sm text-label-sm text-outline">Total Paid</p>
-              <p className="font-headline-md text-headline-md text-primary">$120.00</p>
+              <p className="font-label-sm text-label-sm text-outline">Paid now</p>
+              <p className="font-headline-md text-headline-md text-primary">{money(checkout?.paidNow ?? 120)}</p>
+              {checkout?.promoCode && (
+                <p className="font-label-sm text-label-sm text-secondary">Offer {checkout.promoCode} applied</p>
+              )}
             </div>
+            {checkout && checkout.dueAtCounter > 0 && (
+              <div>
+                <p className="font-label-sm text-label-sm text-outline">Due at counter</p>
+                <p className="font-headline-md text-headline-md text-secondary">{money(checkout.dueAtCounter)}</p>
+              </div>
+            )}
             <div className="text-right">
               <p className="font-label-sm text-label-sm text-outline">Status</p>
-              <p className="font-label-md text-label-md text-secondary font-bold">SECURED</p>
+              <p className="font-label-md text-label-md text-secondary font-bold">
+                {checkout?.payMode === "deposit" ? "PART PAID · BALANCE AT COUNTER" : "PAID IN FULL"}
+              </p>
             </div>
           </div>
         </div>
