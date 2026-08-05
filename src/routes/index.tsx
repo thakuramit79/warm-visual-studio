@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { BrandLogo } from "@/components/brand-logo";
 import { branches, setSelectedBranchId } from "@/lib/branch-store";
 
 export const Route = createFileRoute("/")({
