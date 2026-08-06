@@ -141,7 +141,7 @@ function ServicesPage() {
           </div>
         </aside>
         <section className="flex-1 min-w-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-md">
+          <div className="grid grid-cols-1 gap-md sm:grid-cols-2 2xl:grid-cols-3">
             {SERVICES.map((service) => {
               const isSelected = !!selected[service.id];
               return (
@@ -158,34 +158,45 @@ function ServicesPage() {
                     )}
                   </div>
                   <div className="p-md flex flex-col flex-1">
-                    <div className="flex justify-between items-start mb-xs">
-                      <h2 className="font-headline-md text-headline-md text-primary">{service.name}</h2>
-                      <span className="font-headline-md text-headline-md text-secondary">${service.price}</span>
-                    </div>
-                    <div className="flex items-center gap-sm text-on-surface-variant mb-sm">
-                      <div className="flex items-center gap-xs">
-                        <span className="material-symbols-outlined text-sm">schedule</span>
-                        <span className="text-label-md font-label-md">{service.duration}</span>
+                    <h2 className="mb-xs line-clamp-2 font-headline-md text-headline-md leading-snug text-primary">
+                      {service.name}
+                    </h2>
+                    <div className="mb-sm flex flex-wrap items-center justify-between gap-x-md gap-y-xs">
+                      <div className="flex min-w-0 items-center gap-sm text-on-surface-variant">
+                        <span className="flex shrink-0 items-center gap-xs whitespace-nowrap">
+                          <span className="material-symbols-outlined text-[16px]">schedule</span>
+                          <span className="font-label-sm text-label-sm">{service.duration}</span>
+                        </span>
+                        <span className="flex shrink-0 items-center gap-xs whitespace-nowrap">
+                          <span
+                            className="material-symbols-outlined text-[16px]"
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                          >
+                            star
+                          </span>
+                          <span className="font-label-sm text-label-sm">{service.rating}</span>
+                        </span>
                       </div>
-                      <div className="flex items-center gap-xs">
-                        <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                        <span className="text-label-md font-label-md">{service.rating} ({service.reviews})</span>
-                      </div>
+                      <span className="shrink-0 whitespace-nowrap font-headline-md text-headline-md text-secondary">
+                        ${service.price}
+                      </span>
                     </div>
                     <p className="text-on-surface-variant text-body-md font-body-md line-clamp-2 mb-md">{service.desc}</p>
+
                     <div className="mt-auto pt-md border-t border-outline-variant">
                       <button
                         onClick={() => toggleService(service.id)}
-                        className={`w-full py-2.5 rounded-lg font-label-md text-label-md flex items-center justify-center gap-sm transition-colors ${
+                        className={`w-full py-2.5 rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs whitespace-nowrap transition-colors ${
                           isSelected
                             ? "border border-outline-variant bg-surface-container-lowest text-primary hover:bg-surface-container"
                             : "bg-primary text-on-primary hover:bg-primary-container"
                         }`}
                       >
-                        <span className="material-symbols-outlined text-sm">{isSelected ? "check_circle" : "add_circle"}</span>
+                        <span className="material-symbols-outlined text-[18px]">{isSelected ? "check_circle" : "add_circle"}</span>
                         {isSelected ? "Added" : "Add to Booking"}
                       </button>
                     </div>
+
                   </div>
                 </div>
               );
@@ -203,7 +214,7 @@ function ServicesPage() {
             {selectedServices.length === 0 ? (
               <div className="py-lg flex flex-col items-center justify-center text-center opacity-60">
                 <span className="material-symbols-outlined text-4xl mb-sm">shopping_cart</span>
-                <p className="text-body-md font-body-md">Select a service to<br />begin your journey.</p>
+                <p className="text-body-md font-body-md">Select a service to begin your journey.</p>
               </div>
             ) : (
               <div className="py-md space-y-sm">
