@@ -212,7 +212,7 @@ function ServicesPage() {
             {selectedServices.length === 0 ? (
               <div className="py-lg flex flex-col items-center justify-center text-center opacity-60">
                 <span className="material-symbols-outlined text-4xl mb-sm">shopping_cart</span>
-                <p className="text-body-md font-body-md">Select a service to<br />begin your journey.</p>
+                <p className="text-body-md font-body-md">Select a service to begin your journey.</p>
               </div>
             ) : (
               <div className="py-md space-y-sm">
