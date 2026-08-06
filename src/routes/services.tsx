@@ -141,7 +141,7 @@ function ServicesPage() {
           </div>
         </aside>
         <section className="flex-1 min-w-0">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-md">
+          <div className="grid grid-cols-1 gap-md sm:grid-cols-[repeat(auto-fill,minmax(240px,1fr))]">
             {SERVICES.map((service) => {
               const isSelected = !!selected[service.id];
               return (
