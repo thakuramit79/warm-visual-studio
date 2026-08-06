@@ -158,29 +158,31 @@ function ServicesPage() {
                     )}
                   </div>
                   <div className="p-md flex flex-col flex-1">
-                    <div className="mb-xs flex items-baseline justify-between gap-sm">
-                      <h2 className="min-w-0 font-headline-md text-headline-md leading-snug text-primary">
-                        {service.name}
-                      </h2>
+                    <h2 className="mb-xs line-clamp-2 font-headline-md text-headline-md leading-snug text-primary">
+                      {service.name}
+                    </h2>
+                    <div className="mb-sm flex items-center justify-between gap-sm">
+                      <div className="flex min-w-0 items-center gap-sm text-on-surface-variant">
+                        <span className="flex shrink-0 items-center gap-xs whitespace-nowrap">
+                          <span className="material-symbols-outlined text-[16px]">schedule</span>
+                          <span className="font-label-sm text-label-sm">{service.duration}</span>
+                        </span>
+                        <span className="flex shrink-0 items-center gap-xs whitespace-nowrap">
+                          <span
+                            className="material-symbols-outlined text-[16px]"
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                          >
+                            star
+                          </span>
+                          <span className="font-label-sm text-label-sm">{service.rating}</span>
+                        </span>
+                      </div>
                       <span className="shrink-0 whitespace-nowrap font-headline-md text-headline-md text-secondary">
                         ${service.price}
                       </span>
                     </div>
-                    <div className="mb-sm flex flex-wrap items-center gap-x-sm gap-y-xs text-on-surface-variant">
-                      <span className="flex shrink-0 items-center gap-xs whitespace-nowrap">
-                        <span className="material-symbols-outlined text-[16px]">schedule</span>
-                        <span className="font-label-sm text-label-sm">{service.duration}</span>
-                      </span>
-                      <span className="flex shrink-0 items-center gap-xs whitespace-nowrap">
-                        <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                          star
-                        </span>
-                        <span className="font-label-sm text-label-sm">
-                          {service.rating} · {service.reviews}
-                        </span>
-                      </span>
-                    </div>
                     <p className="text-on-surface-variant text-body-md font-body-md line-clamp-2 mb-md">{service.desc}</p>
+
                     <div className="mt-auto pt-md border-t border-outline-variant">
                       <button
                         onClick={() => toggleService(service.id)}
