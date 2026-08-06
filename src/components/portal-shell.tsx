@@ -115,10 +115,10 @@ export function PortalShell({ children, title, subtitle, eyebrow, actions, bare 
 
       <div className="lg:pl-64">
         <header className="sticky top-0 z-30 border-b border-outline-variant bg-surface-container-lowest/85 backdrop-blur-md">
-          <div className="flex h-16 items-center gap-3 px-md lg:px-lg">
+          <div className="flex h-16 items-center gap-2 px-sm sm:gap-3 sm:px-md lg:px-lg">
             <button
               aria-label="Open navigation"
-              className="rounded-lg p-2 text-on-surface-variant hover:bg-surface-container lg:hidden"
+              className="shrink-0 rounded-lg p-2 text-on-surface-variant hover:bg-surface-container lg:hidden"
               onClick={() => setMobileOpen(true)}
             >
               <Icon name="menu" />
@@ -129,11 +129,11 @@ export function PortalShell({ children, title, subtitle, eyebrow, actions, bare 
               <input
                 aria-label="Search"
                 placeholder="Search services, branches or bookings"
-                className="w-full bg-transparent font-body-md text-body-md text-on-surface outline-none placeholder:text-outline"
+                className="w-full min-w-0 bg-transparent font-body-md text-body-md text-on-surface outline-none placeholder:text-outline"
               />
             </div>
 
-            <div className="ml-auto flex items-center gap-1">
+            <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1">
               <Link
                 to="/notifications"
                 aria-label="Notifications"
@@ -149,16 +149,16 @@ export function PortalShell({ children, title, subtitle, eyebrow, actions, bare 
               >
                 <Icon name="smart_toy" />
               </Link>
-              <span className="ml-2 flex h-9 w-9 items-center justify-center rounded-full bg-primary font-label-md text-on-primary">
+              <span className="ml-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary font-label-md text-on-primary sm:ml-2">
                 AL
               </span>
             </div>
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-container-max px-md py-lg lg:px-lg">
+        <main className="mx-auto w-full max-w-container-max px-sm py-md sm:px-md md:py-lg lg:px-lg">
           <div className="mb-md flex flex-col gap-sm border-b border-outline-variant pb-md md:flex-row md:items-end md:justify-between">
-            <div>
+            <div className="min-w-0">
               {eyebrow && (
                 <p className="mb-xs font-label-sm text-label-sm uppercase tracking-widest text-secondary">{eyebrow}</p>
               )}
@@ -171,7 +171,7 @@ export function PortalShell({ children, title, subtitle, eyebrow, actions, bare 
           {bare ? children : <div className="flex flex-col gap-md">{children}</div>}
         </main>
 
-        <footer className="mx-auto flex w-full max-w-container-max flex-col items-center justify-between gap-sm border-t border-outline-variant px-md py-md md:flex-row lg:px-lg">
+        <footer className="mx-auto flex w-full max-w-container-max flex-col items-center justify-between gap-sm border-t border-outline-variant px-sm py-md text-center sm:px-md md:flex-row md:text-left lg:px-lg">
           <p className="font-label-sm text-label-sm uppercase tracking-widest text-outline">
             BookMyQ · Booking & queue platform for SMEs
           </p>
@@ -184,6 +184,7 @@ export function PortalShell({ children, title, subtitle, eyebrow, actions, bare 
           </div>
         </footer>
       </div>
+
     </div>
   );
 }

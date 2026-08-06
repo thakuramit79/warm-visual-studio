@@ -73,30 +73,30 @@
   --font-label-md: "Manrope", "Inter", sans-serif;
   --font-label-sm: "Manrope", "Inter", sans-serif;
 
-  --text-display-lg: 40px;
-  --text-display-lg--line-height: 56px;
+  --text-display-lg: clamp(28px, 5.4vw, 40px);
+  --text-display-lg--line-height: 1.25;
   --text-display-lg--letter-spacing: -0.02em;
   --text-display-lg--font-weight: 700;
 
-  --text-headline-lg: 28px;
-  --text-headline-lg--line-height: 40px;
+  --text-headline-lg: clamp(22px, 4.2vw, 28px);
+  --text-headline-lg--line-height: 1.3;
   --text-headline-lg--letter-spacing: -0.01em;
   --text-headline-lg--font-weight: 700;
 
-  --text-headline-lg-mobile: 28px;
-  --text-headline-lg-mobile--line-height: 36px;
+  --text-headline-lg-mobile: clamp(22px, 4.2vw, 28px);
+  --text-headline-lg-mobile--line-height: 1.3;
   --text-headline-lg-mobile--font-weight: 700;
 
-  --text-headline-md: 20px;
-  --text-headline-md--line-height: 32px;
+  --text-headline-md: clamp(17px, 2.6vw, 20px);
+  --text-headline-md--line-height: 1.45;
   --text-headline-md--font-weight: 600;
 
-  --text-body-lg: 17px;
-  --text-body-lg--line-height: 28px;
+  --text-body-lg: clamp(15px, 2.2vw, 17px);
+  --text-body-lg--line-height: 1.6;
   --text-body-lg--font-weight: 400;
 
-  --text-body-md: 16px;
-  --text-body-md--line-height: 24px;
+  --text-body-md: clamp(14px, 1.9vw, 16px);
+  --text-body-md--line-height: 1.55;
   --text-body-md--font-weight: 400;
 
   --text-label-md: 14px;
@@ -111,12 +111,32 @@
 }
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-on-surface);
     font-family: var(--font-body-md);
+    overflow-x: hidden;
+  }
+
+  img,
+  svg,
+  video {
+    max-width: 100%;
   }
 }
+
+@utility hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 
 .material-symbols-outlined {
   font-family: "Material Symbols Outlined";
