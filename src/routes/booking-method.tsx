@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PortalShell } from "@/components/portal-shell";
+import { useSelectedBranch } from "@/hooks/use-selected-branch";
 
 export const Route = createFileRoute("/booking-method")({
   head: () => ({
@@ -14,13 +15,37 @@ export const Route = createFileRoute("/booking-method")({
 });
 
 function BookingMethod() {
+  const branch = useSelectedBranch();
+
   return (
     <PortalShell
-      eyebrow="Lumina Wellness Spa"
+      eyebrow={branch ? `Lumina Wellness Spa · ${branch.name}` : "Lumina Wellness Spa"}
       title="How would you like to book?"
       subtitle="Choose your preferred journey to find the right service for you."
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
+      <section className="card-surface grid grid-cols-[minmax(0,1fr)_auto] items-center gap-sm rounded-xl border border-outline-variant bg-surface-container-low p-md sm:flex sm:justify-between">
+        <div className="flex min-w-0 items-start gap-sm">
+          <span className="material-symbols-outlined shrink-0 text-secondary">where_to_vote</span>
+          <div className="min-w-0">
+            <p className="font-label-md text-label-md text-primary">
+              {branch ? `You're checked in at ${branch.name}` : "No branch selected yet"}
+            </p>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              {branch
+                ? `${branch.waitTime} current wait · next slot ${branch.nextSlot}`
+                : "Pick the location you're visiting to see accurate wait times."}
+            </p>
+          </div>
+        </div>
+        <Link
+          to="/"
+          className="shrink-0 whitespace-nowrap rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-2 font-label-md text-primary hover:bg-surface-container"
+        >
+          Change location
+        </Link>
+      </section>
+
+      <div className="mt-md grid grid-cols-1 gap-md md:grid-cols-2">
         <Link
           to="/services"
           className="group flex flex-col text-left card-surface bg-surface-container-lowest border border-outline-variant rounded-xl p-md hover:bg-surface-container"
@@ -63,7 +88,7 @@ function BookingMethod() {
           </div>
         </Link>
       </div>
-      <div className="mt-md flex items-center gap-md">
+      <div className="mt-md flex flex-wrap items-center gap-sm sm:gap-md">
         <div className="flex -space-x-2">
           <div className="w-8 h-8 rounded-full border-2 border-background bg-surface-container-high overflow-hidden">
             <img
@@ -87,9 +112,16 @@ function BookingMethod() {
             />
           </div>
         </div>
-        <p className="font-label-sm text-label-sm text-on-surface-variant">
+        <p className="min-w-0 font-label-sm text-label-sm text-on-surface-variant">
           Over 1,200 slots available today across all specialists
         </p>
+        <Link
+          to="/business"
+          className="font-label-sm text-label-sm text-secondary underline-offset-4 hover:underline sm:ml-auto"
+        >
+          View branch overview
+        </Link>
+
       </div>
     </PortalShell>
   );
