@@ -112,9 +112,16 @@ function BookingMethod() {
             />
           </div>
         </div>
-        <p className="font-label-sm text-label-sm text-on-surface-variant">
+        <p className="min-w-0 font-label-sm text-label-sm text-on-surface-variant">
           Over 1,200 slots available today across all specialists
         </p>
+        <Link
+          to="/business"
+          className="font-label-sm text-label-sm text-secondary underline-offset-4 hover:underline sm:ml-auto"
+        >
+          View branch overview
+        </Link>
+
       </div>
     </PortalShell>
   );
