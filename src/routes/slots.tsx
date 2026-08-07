@@ -157,9 +157,9 @@ function SlotsPage() {
           </section>
 
           <section>
-            <div className="flex justify-between items-center mb-md">
-              <h2 className="font-headline-md text-headline-md text-primary">Select Date</h2>
-              <span className="font-label-md text-secondary">November 2024</span>
+            <div className="mb-md flex items-center justify-between gap-sm">
+              <h2 className="min-w-0 truncate font-headline-md text-headline-md text-primary">Select Date</h2>
+              <span className="shrink-0 whitespace-nowrap font-label-md text-label-md text-secondary">November 2024</span>
             </div>
             <div className="bg-surface-container-low p-md rounded-xl border border-outline-variant">
               <div className="grid grid-cols-7 gap-xs text-center mb-xs">
