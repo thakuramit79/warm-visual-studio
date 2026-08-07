@@ -88,7 +88,7 @@ function BookingMethod() {
           </div>
         </Link>
       </div>
-      <div className="mt-md flex items-center gap-md">
+      <div className="mt-md flex flex-wrap items-center gap-sm sm:gap-md">
         <div className="flex -space-x-2">
           <div className="w-8 h-8 rounded-full border-2 border-background bg-surface-container-high overflow-hidden">
             <img
