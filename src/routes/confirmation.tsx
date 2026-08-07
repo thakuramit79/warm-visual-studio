@@ -124,7 +124,7 @@ function Confirmation() {
         </div>
         <div className="md:col-span-12 mt-lg bg-secondary-container rounded-xl border border-outline-variant p-md relative overflow-hidden">
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-md">
-            <div className="max-w-md">
+            <div className="min-w-0 max-w-[28rem]">
               <h3 className="font-headline-md text-headline-md text-on-secondary-container mb-xs">Save more on every visit</h3>
               <p className="font-body-md text-body-md text-on-secondary-container/90">
                 Join Membership for 20% off next time and unlock priority booking for all services.
