@@ -30,7 +30,7 @@ export function BrandLogo({
         Q
         <span className="absolute -right-0.5 -bottom-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-secondary ring-2 ring-surface-container-lowest" />
       </span>
-      <span className="flex flex-col leading-none">
+      <span className="flex min-w-0 flex-col leading-none">
         <span
           className={`font-display-lg ${word[size]} font-bold tracking-tight ${
             onDark ? "text-on-primary" : "text-primary"
@@ -40,7 +40,7 @@ export function BrandLogo({
         </span>
         {showTagline && (
           <span
-            className={`mt-1 font-label-sm text-label-sm uppercase tracking-widest ${
+            className={`mt-1 hidden whitespace-nowrap font-label-sm text-label-sm uppercase tracking-widest sm:inline ${
               onDark ? "text-primary-fixed-dim" : "text-outline"
             }`}
           >
