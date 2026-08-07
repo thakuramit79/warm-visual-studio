@@ -30,7 +30,7 @@ function Index() {
 
   const select = (id: string) => {
     setSelectedBranchId(id);
-    navigate({ to: "/business" });
+    navigate({ to: "/booking-method" });
   };
 
   return (
