@@ -36,11 +36,11 @@ function Index() {
   return (
     <div className="min-h-screen bg-background text-on-surface font-body-md">
       <header className="border-b border-outline-variant bg-surface-container-lowest">
-        <div className="mx-auto flex w-full max-w-container-max items-center gap-3 px-md py-md lg:px-lg">
+        <div className="mx-auto flex w-full max-w-container-max items-center gap-3 px-sm py-md sm:px-md lg:px-lg">
           <BrandLogo size="lg" showTagline />
-          <span className="ml-auto flex items-center gap-xs rounded-full border border-outline-variant bg-surface-container-low px-sm py-1 font-label-sm text-label-sm text-on-surface-variant">
+          <span className="ml-auto flex shrink-0 items-center gap-xs rounded-full border border-outline-variant bg-surface-container-low px-sm py-1 font-label-sm text-label-sm text-on-surface-variant">
             <span className="material-symbols-outlined text-[16px] text-secondary">qr_code_scanner</span>
-            Scanned check-in
+            <span className="hidden whitespace-nowrap sm:inline">Scanned check-in</span>
           </span>
         </div>
       </header>
