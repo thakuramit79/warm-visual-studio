@@ -45,7 +45,7 @@ function BookingMethod() {
         </Link>
       </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
+      <div className="mt-md grid grid-cols-1 gap-md md:grid-cols-2">
         <Link
           to="/services"
           className="group flex flex-col text-left card-surface bg-surface-container-lowest border border-outline-variant rounded-xl p-md hover:bg-surface-container"
