@@ -153,7 +153,7 @@ function Offers() {
                 Gold &amp; Platinum Only
               </span>
               <h3 className="mb-sm font-headline-lg text-headline-lg text-primary">Weekend Retreat Upgrade</h3>
-              <p className="max-w-md font-body-md text-body-md text-on-surface-variant">
+              <p className="max-w-[28rem] font-body-md text-body-md text-on-surface-variant">
                 Members receive automatic suite upgrades on all weekend wellness retreats booked this quarter.
               </p>
             </div>

@@ -161,8 +161,9 @@ function ServicesPage() {
                     <h2 className="mb-xs line-clamp-2 font-headline-md text-headline-md leading-snug text-primary">
                       {service.name}
                     </h2>
-                    <div className="mb-sm flex flex-wrap items-center justify-between gap-x-md gap-y-xs">
-                      <div className="flex min-w-0 items-center gap-sm text-on-surface-variant">
+                    <div className="mb-sm flex items-center justify-between gap-sm">
+                      <div className="flex min-w-0 flex-1 items-center gap-sm overflow-hidden text-on-surface-variant">
+
                         <span className="flex shrink-0 items-center gap-xs whitespace-nowrap">
                           <span className="material-symbols-outlined text-[16px]">schedule</span>
                           <span className="font-label-sm text-label-sm">{service.duration}</span>

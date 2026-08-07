@@ -130,7 +130,7 @@ function Bookings() {
                     <p className="truncate font-label-md text-label-md text-on-surface-variant">{b.service}</p>
                   </div>
                 </div>
-                <div className="grid flex-1 grid-cols-2 gap-md">
+                <div className="grid flex-1 grid-cols-1 gap-sm sm:grid-cols-2 sm:gap-md">
                   <div>
                     <p className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Date &amp; time</p>
                     <p className="font-body-md text-body-md font-semibold text-on-surface">

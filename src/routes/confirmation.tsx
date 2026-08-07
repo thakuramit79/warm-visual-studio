@@ -42,15 +42,16 @@ function Confirmation() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-base">
         <div className="md:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden flex flex-col">
           <div className="p-md border-b border-outline-variant relative">
-            <div className="flex justify-between items-start mb-base">
-              <div>
+            <div className="mb-base flex flex-wrap items-start justify-between gap-sm">
+              <div className="min-w-0">
                 <span className="font-label-sm text-label-sm uppercase tracking-widest text-secondary mb-xs block">Service Details</span>
                 <h2 className="font-headline-md text-headline-md text-primary">Premium Spa &amp; Wellness</h2>
               </div>
-              <div className="bg-secondary-container px-sm py-xs rounded-full">
-                <span className="font-label-sm text-label-sm text-on-secondary-container font-bold">#BMQ-98210</span>
+              <div className="shrink-0 bg-secondary-container px-sm py-xs rounded-full">
+                <span className="whitespace-nowrap font-label-sm text-label-sm text-on-secondary-container font-bold">#BMQ-98210</span>
               </div>
             </div>
+
             <div className="space-y-sm">
               <div className="flex items-center gap-sm">
                 <span className="material-symbols-outlined text-secondary">calendar_today</span>
@@ -124,7 +125,7 @@ function Confirmation() {
         </div>
         <div className="md:col-span-12 mt-lg bg-secondary-container rounded-xl border border-outline-variant p-md relative overflow-hidden">
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-md">
-            <div className="max-w-md">
+            <div className="min-w-0 max-w-[28rem]">
               <h3 className="font-headline-md text-headline-md text-on-secondary-container mb-xs">Save more on every visit</h3>
               <p className="font-body-md text-body-md text-on-secondary-container/90">
                 Join Membership for 20% off next time and unlock priority booking for all services.
