@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PortalShell } from "@/components/portal-shell";
+import { useSelectedBranch } from "@/hooks/use-selected-branch";
 
 export const Route = createFileRoute("/booking-method")({
   head: () => ({
@@ -14,12 +15,36 @@ export const Route = createFileRoute("/booking-method")({
 });
 
 function BookingMethod() {
+  const branch = useSelectedBranch();
+
   return (
     <PortalShell
-      eyebrow="Lumina Wellness Spa"
+      eyebrow={branch ? `Lumina Wellness Spa · ${branch.name}` : "Lumina Wellness Spa"}
       title="How would you like to book?"
       subtitle="Choose your preferred journey to find the right service for you."
     >
+      <section className="card-surface grid grid-cols-[minmax(0,1fr)_auto] items-center gap-sm rounded-xl border border-outline-variant bg-surface-container-low p-md sm:flex sm:justify-between">
+        <div className="flex min-w-0 items-start gap-sm">
+          <span className="material-symbols-outlined shrink-0 text-secondary">where_to_vote</span>
+          <div className="min-w-0">
+            <p className="font-label-md text-label-md text-primary">
+              {branch ? `You're checked in at ${branch.name}` : "No branch selected yet"}
+            </p>
+            <p className="font-body-md text-body-md text-on-surface-variant">
+              {branch
+                ? `${branch.waitTime} current wait · next slot ${branch.nextSlot}`
+                : "Pick the location you're visiting to see accurate wait times."}
+            </p>
+          </div>
+        </div>
+        <Link
+          to="/"
+          className="shrink-0 whitespace-nowrap rounded-lg border border-outline-variant bg-surface-container-lowest px-md py-2 font-label-md text-primary hover:bg-surface-container"
+        >
+          Change location
+        </Link>
+      </section>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
         <Link
           to="/services"
